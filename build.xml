@@ -1,0 +1,43 @@
+<project name="PJ_Project" basedir="." default="test">
+    <property name="build-dir" value="${basedir}/target"/>
+    <property name="classes-dir" value="${build-dir}/classes"/>
+    <property name="main-java-dir" value="${basedir}/usermanagement/src/main/java"/>
+    <property name="test-java-dir" value="${basedir}/usermanagement/src/test/java"/>
+    <property name="lib-dir" value="${basedir}/.idea/libraries"/>
+
+    <path id="classpath.test">
+        <pathelement location=""/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
+        <pathelement location="${build-dir}"/>
+    </path>
+    <target name="clean">
+        <delete dir="${build-dir}" failonerror="no"/>
+    </target>
+    <target name="init" depends="clean">
+        <mkdir dir="${build-dir}"/>
+        <mkdir dir="${classes-dir}"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${main-java-dir}" destdir="${build-dir}"></javac>
+    </target>
+    <target name="test-compile" depends="init">
+        <javac srcdir="${test-java-dir}" destdir="${build-dir}">
+            <classpath refid="classpath.test"/>
+        </javac>
+    </target>
+
+    <target name="test" depends="test-compile">
+        <junit>
+            <classpath>
+                <pathelement location="${build-dir}"/>
+                <path refid="classpath.test"/>
+            </classpath>
+            <formatter type="plain"/>
+            <batchtest>
+                <fileset dir="${test-java-dir}">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+</project>
