@@ -55,11 +55,19 @@ class User implements Serializable{
         this.dateOfBirth = dateOfBirth;
     }
 
+    /**
+     * Calculates user's age
+     * Uses ChronoUnit static method to calculate difference between current date and birth day
+     * No parameters
+     * @return age (years)
+     */
     public int getAge() {
         LocalDate birthLocalDate = dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate currentLocalDate = LocalDate.now(ZoneId.systemDefault());
         return (int) ChronoUnit.YEARS.between(birthLocalDate, currentLocalDate);
     }
+
+
 
     public String getFullName() {
         StringBuilder stringBuilder = new StringBuilder();
