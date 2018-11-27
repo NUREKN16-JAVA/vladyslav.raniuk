@@ -15,13 +15,17 @@ public class UserTest{
     private static final Long ID = 1L;
     private static final String MY_FIRST_NAME = "Vladyslav";
     private static final String MY_LAST_NAME  = "Raniuk";
+    private static final String MY_DATE_BIRTH_STRING = "29-Jan-1999";
+    private static final String MY_DATE_PATTERN = "dd-MMM-yyyy";
+    private static int MY_BIRTH_YEAR = 1999;
+    private static int MY_BIRTH_DAY = 26;
     private static Date myDate;
     private User user;
     private Calendar calendar;
 
     @Before
     public void setUp() throws Exception {
-        myDate = new SimpleDateFormat("dd-MMM-yyyy").parse("29-Jan-1999");
+        myDate = new SimpleDateFormat(MY_DATE_PATTERN).parse(MY_DATE_BIRTH_STRING);
         user = new User(ID,MY_FIRST_NAME, MY_LAST_NAME, myDate);
         calendar = Calendar.getInstance();
     }
@@ -30,7 +34,7 @@ public class UserTest{
     public void testAgeNow() {
         int ageExpected = 19;
 
-        calendar.set(1999,calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        calendar.set(MY_BIRTH_YEAR,calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
 
         user.setDateOfBirth(calendar.getTime());
 
@@ -43,8 +47,8 @@ public class UserTest{
     public void testAgeBirthdayOneDayAfterToday() {
         int ageExpected = 18;
 
-        calendar.set(1999,calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
-        calendar.add(calendar.get(Calendar.DAY_OF_MONTH), 1);
+        calendar.set(MY_BIRTH_YEAR,calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
 
         user.setDateOfBirth(calendar.getTime());
 
@@ -56,7 +60,7 @@ public class UserTest{
     public void testAgeOneMonthAheadFromCurrentMonth() {
         int ageExpected = 18;
 
-        calendar.set(1999,calendar.get(Calendar.MONTH),26);
+        calendar.set(MY_BIRTH_YEAR,calendar.get(Calendar.MONTH),MY_BIRTH_DAY);
         calendar.add(Calendar.MONTH, 1);
 
         user.setDateOfBirth(calendar.getTime());
@@ -66,11 +70,11 @@ public class UserTest{
     }
 
     @Test
-    public void testAgeOneYearAheadFromCurrentMonth() {
-        int ageExpected = 17;
+    public void testAgeOneYearBeforeCurrentMonth() {
+        int ageExpected = 20;
 
-        calendar.set(1999,calendar.get(Calendar.MONTH),26);
-        calendar.add(Calendar.YEAR, 1);
+        calendar.set(MY_BIRTH_YEAR,calendar.get(Calendar.MONTH),MY_BIRTH_DAY);
+        calendar.add(Calendar.YEAR, -1);
 
         user.setDateOfBirth(calendar.getTime());
 
