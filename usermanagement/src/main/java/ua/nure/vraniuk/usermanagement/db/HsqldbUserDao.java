@@ -10,7 +10,9 @@ public class HsqldbUserDao implements UserDao{
     private static final String CALL_IDENTITY = "call IDENTITY()";
     private static final String CREATE_USER_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
     private static final String SELECT_ALL_USERS = "SELECT id, firstname, lastname, dateofbirth FROM users";
+
     private ConnectionFactory connectionFactory;
+
     private Connection myConnection;
 
     public HsqldbUserDao(ConnectionFactory connectionFactory) {
@@ -20,6 +22,10 @@ public class HsqldbUserDao implements UserDao{
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
+    }
+
+    public HsqldbUserDao() {
+
     }
 
     @Override
@@ -58,6 +64,14 @@ public class HsqldbUserDao implements UserDao{
             throw e;
         }
         return userToInsert;
+    }
+
+    public ConnectionFactory getConnectionFactory() {
+        return connectionFactory;
+    }
+
+    public void setConnectionFactory(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
     }
 
     @Override

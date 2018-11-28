@@ -10,4 +10,5 @@ public interface UserDao {
     public User findUser(Long id) throws DatabaseException;
     public Collection findAll() throws DatabaseException;
     public boolean updateUser(User userToUpdate) throws DatabaseException;
+    public void setConnectionFactory(ConnectionFactory connectionFactory);
 }

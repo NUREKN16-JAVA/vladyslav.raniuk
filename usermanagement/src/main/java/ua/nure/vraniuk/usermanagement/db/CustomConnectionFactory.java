@@ -5,25 +5,39 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class CustomConnectionFactory implements ConnectionFactory{
-    public static final String DRIVER =
+    public String driver =
             "org.hsqldb.jdbcDriver";
-    public static final String DBURL =
+    public String dburl =
             "jdbc:hsqldb:file:db/usermanagement";
-    public static final String USER = "sa";
-    public static final String PASSWORD = "";
+    public String user = "sa";
+    public String password = "";
+
+    public CustomConnectionFactory(String url, String user, String password, String driver) throws DatabaseException {
+        if (!url.isEmpty())
+            dburl = url;
+        if (!user.isEmpty())
+            this.user = user;
+        if (!password.isEmpty())
+            this.password = password;
+        if (!driver.isEmpty())
+            this.driver = driver;
+    }
+
+    public CustomConnectionFactory() throws DatabaseException {
+    }
 
     @Override
     public Connection getConnection(String url, String user, String password ) throws DatabaseException {
-        if (url.isEmpty())
-            url = DBURL;
-        if (user.isEmpty())
-            user = USER;
-        if (password.isEmpty())
-            password = PASSWORD;
+        if (!url.isEmpty())
+            dburl = url;
+        if (!user.isEmpty())
+            this.user = user;
+        if (!password.isEmpty())
+            this.password = password;
         Connection my_connection = null;
         try {
-            Class.forName(DRIVER);
-            my_connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
+            Class.forName(driver);
+            my_connection = DriverManager.getConnection(dburl, user, password);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DatabaseException();
