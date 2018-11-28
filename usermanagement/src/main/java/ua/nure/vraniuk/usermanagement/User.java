@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Objects;
 
-class User implements Serializable{
+public class User implements Serializable{
     private Long id;
     private String firstName;
     private String lastName;
