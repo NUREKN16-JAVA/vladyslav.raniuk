@@ -29,15 +29,15 @@ public class CustomConnectionFactory implements ConnectionFactory{
     @Override
     public Connection getConnection(String url, String user, String password ) throws DatabaseException {
         if (!url.isEmpty())
-            dburl = url;
+            this.dburl = url;
         if (!user.isEmpty())
             this.user = user;
         if (!password.isEmpty())
             this.password = password;
         Connection my_connection = null;
         try {
-            Class.forName(driver);
-            my_connection = DriverManager.getConnection(dburl, user, password);
+            Class.forName(this.driver);
+            my_connection = DriverManager.getConnection(this.dburl, this.user, this.password);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DatabaseException();

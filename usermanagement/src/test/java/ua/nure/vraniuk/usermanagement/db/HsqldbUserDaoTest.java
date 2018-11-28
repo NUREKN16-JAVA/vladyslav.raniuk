@@ -67,6 +67,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         }
 
     }
+
     @Test
     public void testFindAll(){
         try {
@@ -77,6 +78,72 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
         } catch (DatabaseException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDeleteUser() {
+        my_user = new User();
+        my_user.setDateOfBirth(myDate);
+        my_user.setFirstName(MY_FIRST_NAME);
+        my_user.setLastName(MY_LAST_NAME);
+        my_user.setId(null);
+
+        assertNull(my_user.getId());
+
+        try {
+            my_user = userDao.createUser(my_user);
+
+            boolean isDeleted = userDao.deleteUser(my_user);
+
+            assertTrue("User was not deleted!", isDeleted);
+
+        } catch (DatabaseException e) {
+            fail(e.toString());
+        }
+    }
+
+    @Test
+    public void testFindUser() {
+        my_user = new User();
+        my_user.setDateOfBirth(myDate);
+        my_user.setFirstName(MY_FIRST_NAME);
+        my_user.setLastName(MY_LAST_NAME);
+        my_user.setId(null);
+
+        assertNull(my_user.getId());
+
+        try {
+            my_user = userDao.createUser(my_user);
+
+            User foundUser = userDao.findUser(my_user.getId());
+
+            assertNotNull("Found user equals null!", foundUser);
+
+        } catch (DatabaseException e) {
+            fail(e.toString());
+        }
+    }
+
+    @Test
+    public void testUpdateUser() {
+        my_user = new User();
+        my_user.setDateOfBirth(myDate);
+        my_user.setFirstName(MY_FIRST_NAME);
+        my_user.setLastName(MY_LAST_NAME);
+        my_user.setId(null);
+
+        assertNull(my_user.getId());
+
+        try {
+            my_user = userDao.createUser(my_user);
+
+            boolean isUpdated = userDao.updateUser(my_user);
+
+            assertTrue("User was not updated!", isUpdated);
+
+        } catch (DatabaseException e) {
+            fail(e.toString());
         }
     }
 }
