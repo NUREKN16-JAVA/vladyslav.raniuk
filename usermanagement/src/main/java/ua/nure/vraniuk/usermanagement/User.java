@@ -23,6 +23,12 @@ public class User implements Serializable{
         this.dateOfBirth = dateOfBirth;
     }
 
+    public User(String firstName, String lastName, Date dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public Long getId() {
         return id;
     }

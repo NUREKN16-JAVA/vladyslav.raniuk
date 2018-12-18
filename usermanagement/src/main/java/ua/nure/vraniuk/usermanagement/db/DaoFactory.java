@@ -20,7 +20,7 @@ public class DaoFactory {
 
     private static final DaoFactory INSTANCE = new DaoFactory();
 
-    private DaoFactory() {
+    public DaoFactory() {
         properties = new Properties();
         try {
             properties.load(getClass().getClassLoader().getResourceAsStream("settings.properties"));
