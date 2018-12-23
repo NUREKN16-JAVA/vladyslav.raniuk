@@ -15,7 +15,7 @@ public class MockUserDao implements UserDao {
     }
 
     @Override
-    public User createUser(User user) throws DatabaseException {
+    public User create(User user) throws DatabaseException {
         long id = users.size() + 1;
         users.put(id, user);
         user.setId(id);

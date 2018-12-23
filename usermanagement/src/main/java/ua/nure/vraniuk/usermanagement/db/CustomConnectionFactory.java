@@ -1,8 +1,11 @@
 package ua.nure.vraniuk.usermanagement.db;
 
+import com.sun.istack.internal.NotNull;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class CustomConnectionFactory implements ConnectionFactory{
     public String driver =
@@ -24,6 +27,15 @@ public class CustomConnectionFactory implements ConnectionFactory{
     }
 
     public CustomConnectionFactory() throws DatabaseException {
+    }
+
+    public CustomConnectionFactory(@NotNull Properties properties) {
+        if (!properties.isEmpty()) {
+            this.dburl = properties.getProperty(DaoFactory.URL);
+            this.user = properties.getProperty(DaoFactory.USER_DAO);
+            this.password = properties.getProperty(DaoFactory.PASSWORD);
+            this.driver = properties.getProperty(DaoFactory.DRIVER);
+        }
     }
 
     @Override
