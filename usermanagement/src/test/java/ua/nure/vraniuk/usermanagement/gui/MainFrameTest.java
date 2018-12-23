@@ -56,7 +56,7 @@ public class MainFrameTest extends JFCTestCase {
         try {
             Properties properties = new Properties();
             properties.setProperty(DAO_FACTORY_PROPERTY, MockDaoFactory.class.getName());
-            //DaoFactory.init(properties);
+            DaoFactory.init(properties);
             userDao = ((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao();
             userDao.expectAndReturn("findAll", new ArrayList<User>());
             userDao.expectAndReturn("findAll", new ArrayList<User>());

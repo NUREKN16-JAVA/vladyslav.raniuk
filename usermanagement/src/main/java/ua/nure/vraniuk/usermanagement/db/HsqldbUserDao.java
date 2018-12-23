@@ -38,7 +38,7 @@ class HsqldbUserDao implements UserDao{
     }
 
     @Override
-    public User createUser(User userToInsert) throws DatabaseException {
+    public User create(User userToInsert) throws DatabaseException {
         int rowsInserted = 0;
 
         try {

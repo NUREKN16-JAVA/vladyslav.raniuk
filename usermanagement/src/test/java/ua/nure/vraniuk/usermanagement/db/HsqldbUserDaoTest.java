@@ -57,7 +57,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertNull(my_user.getId());
 
         try {
-            my_user = userDao.createUser(my_user);
+            my_user = userDao.create(my_user);
 
             assertNotNull(my_user);
             assertNotNull(my_user.getId());
@@ -92,7 +92,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertNull(my_user.getId());
 
         try {
-            my_user = userDao.createUser(my_user);
+            my_user = userDao.create(my_user);
 
             boolean isDeleted = userDao.deleteUser(my_user);
 
@@ -114,7 +114,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertNull(my_user.getId());
 
         try {
-            my_user = userDao.createUser(my_user);
+            my_user = userDao.create(my_user);
 
             User foundUser = userDao.findUser(my_user.getId());
 
@@ -136,7 +136,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertNull(my_user.getId());
 
         try {
-            my_user = userDao.createUser(my_user);
+            my_user = userDao.create(my_user);
 
             boolean isUpdated = userDao.updateUser(my_user);
 
