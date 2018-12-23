@@ -2,7 +2,9 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+out/
 vladyslav.raniuk.iml
+
 
 # Package Files #
 *.jar
