@@ -1,6 +1,7 @@
 package ua.nure.vraniuk.usermanagement.db;
 
 import com.sun.istack.internal.NotNull;
+import org.hsqldb.jdbc.JDBCDriver;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +12,7 @@ public class CustomConnectionFactory implements ConnectionFactory{
     public String driver =
             "org.hsqldb.jdbcDriver";
     public String dburl =
-            "jdbc:hsqldb:file:db/usermanagement";
+            "jdbc:hsqldb:file:C:/Users/Vladyslav/IdeaProjects/PJ_Project/db/usermanagement";
     public String user = "sa";
     public String password = "";
 
@@ -48,12 +49,13 @@ public class CustomConnectionFactory implements ConnectionFactory{
             this.password = password;
         Connection my_connection = null;
         try {
-            Class.forName(this.driver);
+            DriverManager.registerDriver(new JDBCDriver());
+            //Class.forName(this.driver);
             my_connection = DriverManager.getConnection(this.dburl, this.user, this.password);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DatabaseException();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("Error: unable to load driver class!");
             System.exit(1);
         }

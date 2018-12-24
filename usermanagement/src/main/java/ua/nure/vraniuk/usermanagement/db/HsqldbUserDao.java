@@ -9,8 +9,8 @@ import java.util.LinkedList;
 class HsqldbUserDao implements UserDao{
     private static final String CALL_IDENTITY = "call IDENTITY()";
     private static final String CREATE_USER_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
-    private static final String SELECT_ALL_USERS = "SELECT id, firstname, lastname, dateofbirth FROM users";
-    private static final String FIND_USER = "SELECT id, firstname, lastname, dateofbirth FROM users WHERE id = ?";
+    private static final String SELECT_ALL_USERS = "SELECT * FROM users";
+    private static final String FIND_USER = "SELECT * FROM users WHERE id = ?";
     private static final String DELETE_USER = "DELETE FROM users WHERE id = ?";
     private static final String UPDATE_USER = "UPDATE users " +
             "SET id = ?,firstname = ?, lastname = ?, dateofbirth = ? " +
