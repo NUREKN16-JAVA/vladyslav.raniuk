@@ -24,5 +24,10 @@
 <input type=”submit” name=”editButton” value=”Edit”>
 <input type=”submit” name=”deleteButton” value=”Delete”>
 <input type=”submit” name=”detailsButton” value=”Details”>
+<c:if test="${requestScope.error != null}">
+    <script>
+        alert('${requestScope.error}')
+    </script>
+</c:if>
 </body>
 </html>

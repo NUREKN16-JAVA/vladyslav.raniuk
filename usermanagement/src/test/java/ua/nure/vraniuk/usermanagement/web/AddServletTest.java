@@ -7,9 +7,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class EditServletTest extends MockServletTestCase {
-    private static final String OK_BUTTON = "okButton";
-    private static final String CANCEL_BUTTON = "cancelButton";
+import static ua.nure.vraniuk.usermanagement.web.EditServlet.OK_BUTTON;
+
+public class AddServletTest extends MockServletTestCase {
 
     private static final Long ID_USER = 1000L;
     private static final String FIRST_NAME_USER = "John";
@@ -18,14 +18,14 @@ public class EditServletTest extends MockServletTestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        createServlet(EditServlet.class);
+        createServlet(AddServlet.class);
     }
 
-    public void testEdit() {
+    public void testAdd() {
         User expectedUser = new User(ID_USER, FIRST_NAME_USER, LAST_NAME_USER, DATE_USER);
-        getMockUserDao().expect("updateUser", expectedUser);
+        User userToSend = new User(FIRST_NAME_USER, LAST_NAME_USER, DATE_USER);
+        getMockUserDao().expectAndReturn("create", userToSend, expectedUser);
 
-        addRequestParameter("id", expectedUser.getId().toString());
         addRequestParameter("firstName", expectedUser.getFirstName());
         addRequestParameter("lastName", expectedUser.getLastName());
         addRequestParameter("date", expectedUser.getDateOfBirth().toString());
@@ -33,12 +33,24 @@ public class EditServletTest extends MockServletTestCase {
         doPost();
     }
 
-    public void testEditEmptyDate() {
+    public void testAddEmptyDate() {
         User expectedUser = new User(ID_USER, FIRST_NAME_USER, LAST_NAME_USER, DATE_USER);
 
-        addRequestParameter("id", expectedUser.getId().toString());
         addRequestParameter("firstName", expectedUser.getFirstName());
         addRequestParameter("lastName", expectedUser.getLastName());
+        addRequestParameter(OK_BUTTON, "ok");
+
+        doPost();
+
+        String errorMessage = (String) getWebMockObjectFactory().getMockSession().getAttribute("error");
+        assertNotNull("Could nt find message in the error scope", errorMessage);
+    }
+
+    public void testAddEmptyFirstName() {
+        User expectedUser = new User(ID_USER, FIRST_NAME_USER, LAST_NAME_USER, DATE_USER);
+
+        addRequestParameter("lastName", expectedUser.getLastName());
+        addRequestParameter("date",  DateFormat.getDateInstance().format(new Date()));
         addRequestParameter(OK_BUTTON, "ok");
 
         doPost();
@@ -47,26 +59,24 @@ public class EditServletTest extends MockServletTestCase {
         assertNotNull("Could not find message in the error scope", errorMessage);
     }
 
-    public void testEditEmptyFirstName() {
+    public void testAddEmptyLastName() {
         User expectedUser = new User(ID_USER, FIRST_NAME_USER, LAST_NAME_USER, DATE_USER);
 
-        addRequestParameter("id", expectedUser.getId().toString());
-        addRequestParameter("lastName", expectedUser.getLastName());
+        addRequestParameter("firstName", expectedUser.getFirstName());
         addRequestParameter("date", expectedUser.getDateOfBirth().toString());
         addRequestParameter(OK_BUTTON, "ok");
 
         doPost();
 
         String errorMessage = (String) getWebMockObjectFactory().getMockSession().getAttribute("error");
-        assertNotNull("Could not find message in the error scope", errorMessage);
+        assertNotNull("Coul d not find message in the error scope", errorMessage);
     }
 
-    public void testEditEmptyLastName() {
+    public void testAddIncorrectDate() {
         User expectedUser = new User(ID_USER, FIRST_NAME_USER, LAST_NAME_USER, DATE_USER);
 
-        addRequestParameter("id", expectedUser.getId().toString());
         addRequestParameter("firstName", expectedUser.getFirstName());
-        addRequestParameter("date", DateFormat.getDateInstance().format(new Date()));
+        addRequestParameter("date", "Lol,incorrect!");
         addRequestParameter(OK_BUTTON, "ok");
 
         doPost();
@@ -74,19 +84,4 @@ public class EditServletTest extends MockServletTestCase {
         String errorMessage = (String) getWebMockObjectFactory().getMockSession().getAttribute("error");
         assertNotNull("Could not find message in the error scope", errorMessage);
     }
-
-    public void testEditIncorrectDate() {
-        User expectedUser = new User(ID_USER, FIRST_NAME_USER, LAST_NAME_USER, DATE_USER);
-
-        addRequestParameter("lastName", expectedUser.getLastName());
-        addRequestParameter("firstName", expectedUser.getFirstName());
-        addRequestParameter("date", "This is the incorrect date!");
-        addRequestParameter(OK_BUTTON, "ok");
-
-        doPost();
-
-        String errorMessage = (String) getWebMockObjectFactory().getMockSession().getAttribute("error");
-        assertNotNull("Could not find message in the error scope", errorMessage);
-    }
-
 }
