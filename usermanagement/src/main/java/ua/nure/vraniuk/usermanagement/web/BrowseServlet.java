@@ -16,6 +16,8 @@ public class BrowseServlet extends HttpServlet {
 
     public static final String BROWSE_JSP = "/browse.jsp";
     public static final String EDIT_JSP = "/edit.jsp";
+    public static final String ADD_JSP = "/add.jsp";
+    public static final String DETAILS_JSP = "/details.jsp";
 
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (Objects.nonNull(req.getParameter("addButton"))) {
@@ -42,9 +44,21 @@ public class BrowseServlet extends HttpServlet {
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        req.getRequestDispatcher(ADD_JSP).forward(req, resp);
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        String idString = req.getParameter("id");
+        if (Objects.isNull(idString)) {
+            return;
+        }
+        try {
+            User user = DaoFactory.getInstance().getUserDao().findUser(Long.parseLong(idString));
+            DaoFactory.getInstance().getUserDao().deleteUser(user);
+        } catch (DatabaseException e) {
+            return;
+        }
+        req.getRequestDispatcher(BROWSE_JSP).forward(req, resp);
     }
 
     private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -66,5 +80,6 @@ public class BrowseServlet extends HttpServlet {
     }
 
     private void details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        req.getRequestDispatcher(DETAILS_JSP).forward(req, resp);
     }
 }
