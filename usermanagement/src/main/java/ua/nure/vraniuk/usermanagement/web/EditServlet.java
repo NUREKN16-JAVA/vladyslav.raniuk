@@ -73,17 +73,20 @@ public class EditServlet extends HttpServlet {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         User userToAlter = new User();
 
-        Long id = Long.parseLong(req.getParameter("id"));
+        Long id = null;
         if(Objects.isNull(id))
             throw new ValidationException("Invalid id.");
+        id = Long.parseLong(req.getParameter("id"));
 
-        String firstName = req.getParameter("firstName");
+        String firstName = new String();
         if(Objects.isNull(firstName))
             throw new ValidationException("Invalid firstName.");
+        firstName = req.getParameter("firstName");
 
-        String lastName = req.getParameter("lastName");
+        String lastName = new String();
         if(Objects.isNull(lastName))
             throw new ValidationException("Invalid lastName.");
+        lastName = req.getParameter("lastName");
 
         Date date = null;
         try {

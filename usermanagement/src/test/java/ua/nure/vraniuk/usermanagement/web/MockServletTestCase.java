@@ -25,7 +25,6 @@ public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
         DaoFactory.init(properties);
         setMockUserDao(((MockDaoFactory)DaoFactory.getInstance()).getMockUserDao());
 
-        createServlet(BrowseServlet.class);
     }
 
     protected void tearDown() throws Exception {
