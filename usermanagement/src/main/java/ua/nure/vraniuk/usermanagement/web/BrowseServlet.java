@@ -14,8 +14,8 @@ import java.util.Objects;
 
 public class BrowseServlet extends HttpServlet {
 
-    private static final String BROWSE_JSP = "/browse.jsp";
-    private static final String EDIT_JSP = "/edit.jsp";
+    public static final String BROWSE_JSP = "/browse.jsp";
+    public static final String EDIT_JSP = "/edit.jsp";
 
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (Objects.nonNull(req.getParameter("addButton"))) {
@@ -59,10 +59,10 @@ public class BrowseServlet extends HttpServlet {
             req.getSession().setAttribute("user", user);
         } catch (DatabaseException e) {
             req.setAttribute("error", "ERROR: " + e.getMessage());
-            req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+            req.getRequestDispatcher(BROWSE_JSP).forward(req, resp);
             return;
         }
-        resp.sendRedirect("edit");
+        resp.sendRedirect(EDIT_JSP);
     }
 
     private void details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
