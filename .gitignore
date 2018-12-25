@@ -2,8 +2,8 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-vladyslav.raniuk.iml
 out/
+vladyslav.raniuk.iml
 
 
 # Package Files #
@@ -11,9 +11,7 @@ out/
 *.war
 *.ear
 *.iml
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+pom.xml
 
 # Target, bin and settings
 target*
