@@ -31,7 +31,7 @@ public class EditServlet extends HttpServlet {
         }
     }
 
-    private void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException{
+    protected void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException{
         try {
             req.getRequestDispatcher(BrowseServlet.EDIT_JSP).forward(req, resp);
         } catch (IOException e) {
@@ -65,7 +65,7 @@ public class EditServlet extends HttpServlet {
         }
     }
 
-    private void processUser(User userToProcess) throws DatabaseException {
+    protected void processUser(User userToProcess) throws DatabaseException {
         DaoFactory.getInstance().getUserDao().updateUser(userToProcess);
     }
 
