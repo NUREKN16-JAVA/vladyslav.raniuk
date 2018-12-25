@@ -8,7 +8,7 @@ public abstract class DaoFactory {
     public static final String PASSWORD = "connection.password";
     public static final String URL = "connection.url";
     public static final String DRIVER = "connection.driver";
-    protected static final String USER_DAO = "ua.nure.vraniuk.usermanagement.db.UserDao";
+    protected static final String USER_DAO = "dao.ua.nure.vraniuk.usermanagement.db.UserDao";
 
     private static DaoFactory instance;
 
