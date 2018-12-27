@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 public class EditServlet extends HttpServlet {
@@ -44,25 +43,18 @@ public class EditServlet extends HttpServlet {
         try {
             User userToAlter = getUser(req);
             processUser(userToAlter);
+            resp.sendRedirect("browse");
         } catch (DatabaseException e) {
             e.printStackTrace();
             throw new ServletException(e);
         } catch (ValidationException e) {
-            e.printStackTrace();
             req.setAttribute("error", e.getMessage());
             showPage(req, resp);
-            throw new ServletException(e);
         }
-        req.getRequestDispatcher(BrowseServlet.BROWSE_JSP).forward(req, resp);
     }
 
-    private void doCancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException{
-        try {
-            req.getRequestDispatcher(BrowseServlet.BROWSE_JSP).forward(req, resp);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new ServletException(e.getMessage());
-        }
+    private void doCancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException{
+        resp.sendRedirect("browse");
     }
 
     protected void processUser(User userToProcess) throws DatabaseException {
@@ -70,27 +62,29 @@ public class EditServlet extends HttpServlet {
     }
 
     private User getUser(HttpServletRequest req) throws ValidationException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        formatter.setLenient(false);
         User userToAlter = new User();
 
         Long id = null;
+        id = Long.parseLong(req.getParameter("id"));
         if(Objects.isNull(id))
             throw new ValidationException("Invalid id.");
-        id = Long.parseLong(req.getParameter("id"));
 
         String firstName = new String();
+        firstName = req.getParameter("firstName");
         if(Objects.isNull(firstName))
             throw new ValidationException("Invalid firstName.");
-        firstName = req.getParameter("firstName");
 
         String lastName = new String();
+        lastName = req.getParameter("lastName");
         if(Objects.isNull(lastName))
             throw new ValidationException("Invalid lastName.");
-        lastName = req.getParameter("lastName");
 
         Date date = null;
         try {
-            date = formatter.parse(req.getParameter("date"));
+            String date_test = req.getParameter("date");
+            date = new Date(formatter.parse(date_test).getTime());
         } catch (ParseException e) {
             e.printStackTrace();
             throw new ValidationException("Invalid date.");
